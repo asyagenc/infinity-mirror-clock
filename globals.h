@@ -44,6 +44,8 @@ extern bool animationMenu;
 extern int animationSubMenu;
 extern bool brightnessMenu;
 
+
+
 extern int alarmSubMenu;
 extern const int MAX_ALARMS;
 extern Alarm alarms[];

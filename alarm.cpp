@@ -24,12 +24,12 @@ void alarmSetup() {
     lcd.setCursor(0, 1);
     if (stage == 0) {
       lcd.print("Saat: ");
+      if (currentHour < 10) lcd.print("0");
       lcd.print(currentHour);
-      lcd.print("   ");
     } else {
       lcd.print("Dakika: ");
+      if (currentMinute < 10) lcd.print("0");
       lcd.print(currentMinute);
-      lcd.print("   ");
     }
 
     int clkState = digitalRead(clkPin);

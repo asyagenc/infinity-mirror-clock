@@ -34,6 +34,7 @@ const int MAX_ALARMS = 5;
 Alarm alarms[MAX_ALARMS];
 int alarmCount = 0;
 
+
 // ---- Rotary Encoder ----
 int lastClkState = 0;
 
