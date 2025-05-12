@@ -44,27 +44,56 @@ void updateMainMenu() {
 
 void showAlarmSubMenu() {
   lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("Alarm Menu:");
-  lcd.setCursor(0, 1);
-  lcd.print("Kur / Listele");
-}
+  switch(alarmSubMenu){
+    case 1:
+      lcd.print(">Alarm kur");
+      lcd.setCursor(0, 1);
+      lcd.print(" Alarmları gör");
+      break;
+    case 2:
+      lcd.print(">Alarmları gör");
+      lcd.setCursor(0, 1);
+      lcd.print(" Alarm kur");
+      break;
 
+  }
+}
 void showBrightnessMenu() {
   lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("Parlaklik:");
+  
   lcd.setCursor(0, 1);
-  lcd.print(">1  2  3"); 
+  switch (brightnessSubMenu) {
+    case 1:
+      lcd.print(">1  2  3");
+      break;
+    case 2:
+      lcd.print(" 1 >2  3");
+      break;
+    case 3:
+      lcd.print(" 1  2 >3");
+      break;
+  }
 }
 
 void showAnimationSubMenu() {
   lcd.clear();
   lcd.setCursor(0, 0);
   lcd.print("Animasyon:");
+
   lcd.setCursor(0, 1);
-  lcd.print("Disko / Chill / Spring");
+  switch (animationSubMenu) {
+    case 1:
+      lcd.print(">Disko  Chill  Spring");
+      break;
+    case 2:
+      lcd.print(" Disko >Chill  Spring");
+      break;
+    case 3:
+      lcd.print(" Disko  Chill >Spring");
+      break;
+  }
 }
+
 
 void handleTemperatureMenu(DateTime now) {
   if (temperatureColorMenu) {
