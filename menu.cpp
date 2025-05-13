@@ -95,26 +95,6 @@ void showAnimationSubMenu() {
 }
 
 
-void handleTemperatureMenu(DateTime now) {
-  if (temperatureColorMenu) {
-    showTemperatureColor(now);
-
-    if (!digitalRead(swPin)) {
-      waitForRelease();
-      temperatureColorMenu = false;
-      updateMainMenu();
-    }
-
-    delay(500);
-  }
-}
-
-void handleInactivityTimeout(DateTime now){
-   if (currentState == STATE_MAIN_MENU && millis() - lastInteractionTime > inactivityTimeout) {
-  currentState = STATE_SHOW_TIME;
-  showCurrentTime();  // LCD'de saat göster
-  }
 
 
-}
  

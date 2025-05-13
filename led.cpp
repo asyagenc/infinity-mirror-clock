@@ -37,42 +37,37 @@ void showTimeOnLED(DateTime now) {
 
 
 // Ortam sıcaklığına göre LED ayarlama fonksiyonu
-void showTemperatureColor(DateTime now) {
+void showTemperatureColor() {
   float temperature = rtc.getTemperature();
-  CRGB bgColor, minColor, hourColor, secColor;
+  DateTime now = rtc.now();
 
+  // Sabit renkler (örnek)
+  CRGB bgColor ;
+  CRGB hourColor = CRGB::Purple;
+  CRGB minColor = CRGB::White;
+  CRGB secColor= CRGB::HotPink;
+
+  // Sıcaklığa göre sadece saniye rengi değişir
   if (temperature >= 35.0) {
-    bgColor = CRGB::Red;
-    hourColor = CRGB::Purple;
-    minColor = CRGB::Blue;
-    secColor = CRGB::White;
-  } else if (temperature >= 20.0 && temperature <= 30.0) {
-    bgColor = CRGB::Blue;
-    hourColor = CRGB::Purple;
-    minColor = CRGB::Yellow;
-    secColor = CRGB::White;
-  } else if (temperature >= 10.0 && temperature < 20.0) {
-    bgColor = CRGB::Yellow;
-    hourColor = CRGB::Purple;
-    minColor = CRGB::Blue;
-    secColor = CRGB::White;
-  } else {
-    bgColor = CRGB::Black;
-    hourColor = CRGB::Red;
-    minColor = CRGB::Green;
-    secColor = CRGB::Blue;
+    bgColor = CRGB::Red;  
+  } else if (temperature >= 18.0 && temperature <= 25.0) {
+    bgColor = CRGB::Green;
+  }  else {
+    bgColor = CRGB::Blue;  // soğuksa mavi 
   }
 
+  // Saat verisi
   int hour = now.hour() % 12;
   int minute = now.minute();
   int second = now.second();
-
   float hourWithMinute = hour + (minute / 60.0);
 
+  // LED index hesapları
   int hourIndex   = getClockwiseIndex(hourWithMinute, 12.0);
   int minuteIndex = getClockwiseIndex(minute, 60.0);
   int secondIndex = getClockwiseIndex(second, 60.0);
 
+  // LED'leri doldur
   for (int i = 0; i < NUM_LEDS; i++) {
     leds[i] = bgColor;
   }
@@ -80,8 +75,10 @@ void showTemperatureColor(DateTime now) {
   leds[hourIndex]   = hourColor;
   leds[minuteIndex] = minColor;
   leds[secondIndex] = secColor;
+
   FastLED.show();
 }
+
 
 void DiskoMode() {
   static bool ledsOn = true;

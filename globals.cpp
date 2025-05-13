@@ -12,6 +12,7 @@ CRGB leds[NUM_LEDS];
 int brightnessLevel = 60;
 int brightnessOption = 2;
 int brightnessSubMenu = 1;
+bool ledsOn = true;
 
 // ---- LCD ve RTC ----
 LiquidCrystal_I2C lcd(0x27, 16, 2);
@@ -23,7 +24,7 @@ int mainMenu = 1;
 unsigned long lastInteractionTime = 0;
 const unsigned long inactivityTimeout = 15000;
 
-bool temperatureColorMenu = false;
+bool temperatureColor = false;
 bool waitForTempExit = false;
 bool animationMenu = false;
 int animationSubMenu = 1;
@@ -39,7 +40,6 @@ int alarmCount = 0;
 int lastClkState = 0;
 
 // ---- Ses Sensörü ----
-const int soundThreshold = 500;
-const unsigned long soundHoldDuration = 2000;
-bool soundDetected = false;
-unsigned long soundDetectedTime = 0;
+const int soundThreshold = 300;
+const unsigned long debounceDuration = 500;
+unsigned long lastSoundTime = 0;
