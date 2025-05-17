@@ -48,10 +48,10 @@ void showAlarmSubMenu() {
     case 1:
       lcd.print(">Alarm kur");
       lcd.setCursor(0, 1);
-      lcd.print(" Alarmları gör");
+      lcd.print(" Alarmları gor");
       break;
     case 2:
-      lcd.print(">Alarmları gör");
+      lcd.print(">Alarmları gor");
       lcd.setCursor(0, 1);
       lcd.print(" Alarm kur");
       break;
