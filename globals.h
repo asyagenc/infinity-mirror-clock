@@ -24,6 +24,7 @@ extern CRGB leds[];
 extern int brightnessLevel;
 extern int brightnessOption;
 extern int brightnessSubMenu;
+extern bool ledsOn;
 
 // ---- LCD ----
 extern LiquidCrystal_I2C lcd;
@@ -38,7 +39,7 @@ extern unsigned long lastInteractionTime;
 extern const unsigned long inactivityTimeout;
 extern bool alarmMenu;
 
-extern bool temperatureColorMenu;
+extern bool temperatureColor;
 extern bool waitForTempExit;
 extern bool animationMenu;
 extern int animationSubMenu;
@@ -56,8 +57,8 @@ extern int lastClkState;
 
 // ---- Ses Sensörü ----
 extern const int soundThreshold;
-extern const unsigned long soundHoldDuration;
-extern bool soundDetected;
-extern unsigned long soundDetectedTime;
+extern const unsigned long debounceDuration;
+extern unsigned long lastSoundTime;
+
 
 #endif

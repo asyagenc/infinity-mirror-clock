@@ -4,7 +4,7 @@
 #include <RTClib.h>
 
 void showTimeOnLED(DateTime now);
-void showTemperatureColor(DateTime now);
+void showTemperatureColor();
 void DiskoMode();
 void ChillMode();
 void SpringMode();

@@ -46,7 +46,6 @@ void loop() {
   handleRotary();
   handleButton();
   handleSoundSensor();
-  handleInactivityTimeout(now);
   showTimeOnLED(now);  
 
   delay(200);  
@@ -78,7 +77,7 @@ void execute() {
   switch (mainMenu) {
     case 1: alarmMenu = true; showAlarmSubMenu(); break;
     case 2: brightnessMenu = true; showBrightnessMenu(); break;
-    case 3: lcd.print("Renk degisimi"); temperatureColorMenu = true; break;
+    case 3: handleTemperature(); break;
     case 4: animationMenu = true; showAnimationSubMenu(); break;
     case 5: showCurrentTime(); break;
   }
@@ -140,7 +139,7 @@ void handleButton() {
         switch (mainMenu) {
           case 1: currentState = STATE_ALARM_MENU; showAlarmSubMenu(); break;
           case 2: currentState = STATE_BRIGHTNESS_MENU; showBrightnessMenu(); break;
-          case 3: currentState = STATE_TEMPERATURE_COLOR; showTemperatureColor(rtc.now()); break;
+          case 3: currentState = STATE_TEMPERATURE_COLOR; handleTemperature(); break;
           case 4: currentState = STATE_ANIMATION_MENU; showAnimationSubMenu(); break;
           case 5: currentState = STATE_SHOW_TIME; showCurrentTime(); break;
         }
@@ -170,6 +169,10 @@ void handleButton() {
         break;
 
       case STATE_TEMPERATURE_COLOR:
+        currentState = STATE_MAIN_MENU;
+        updateMainMenu();
+        break;
+
       case STATE_SHOW_TIME:
         currentState = STATE_MAIN_MENU;
         updateMainMenu();
@@ -202,3 +205,54 @@ void showCurrentTime() {
   }
   updateMainMenu();
 }
+void handleTemperature() {
+  while (true) {
+    DateTime now = rtc.now();
+    float temperature = rtc.getTemperature();
+
+    // Saat verisi
+    int hour = now.hour() % 12;
+    int minute = now.minute();
+    int second = now.second();
+    float hourWithMinute = hour + (minute / 60.0);
+
+    // LED renkleri
+    CRGB bgColor;
+    CRGB hourColor = CRGB::Purple;
+    CRGB minColor = CRGB::White;
+    CRGB secColor = CRGB::Purple;
+
+    if (temperature >= 35.0) {
+      bgColor = CRGB::Red;
+    } else if (temperature >= 20.0 && temperature <= 30.0) {
+      bgColor = CRGB::Green;
+    } else if (temperature >= 10.0 && temperature < 20.0) {
+      bgColor = CRGB::Blue;
+    } else {
+      bgColor = CRGB::Yellow;
+    }
+
+    // Saat LED index'leri
+    int hourIndex   = getClockwiseIndex(hourWithMinute, 12.0);
+    int minuteIndex = getClockwiseIndex(minute, 60.0);
+    int secondIndex = getClockwiseIndex(second, 60.0);
+
+    // LED'leri güncelle
+    for (int i = 0; i < NUM_LEDS; i++) leds[i] = bgColor;
+    leds[hourIndex] = hourColor;
+    leds[minuteIndex] = minColor;
+    leds[secondIndex] = secColor;
+    FastLED.show();
+
+    // Buton kontrolü
+    if (!digitalRead(swPin)) {
+      waitForRelease();
+      updateMainMenu();
+      break;
+    }
+
+    delay(200); // saniyelik akış için yeterli
+  }
+}
+
+
