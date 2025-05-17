@@ -18,6 +18,8 @@ void setup() {
   Serial.begin(9600);
   Wire.begin();
   rtc.begin();
+  // Bunu bir defaya mahsus olarak setup() içinde yaz, sonra kaldır:
+  //rtc.adjust(DateTime(2025, 5, 17, 20, 34, 0));  // Örnek doğru tarih/saat
 
   lcd.init();
   lcd.backlight();
